@@ -1,0 +1,27 @@
+
+<div class="container">
+<div class="row justify-content-center align-items-center">
+<div class="col-8">
+    <div class="mt-5">
+        <form (ngSubmit)="onUpdate()">
+            <div class="input-group">
+              <input type="text" [(ngModel)]="player.name" name="name" placeholder="player's name" class="form-control" />
+            </div><br/>
+            <div class="input-group">
+                <input type="text" [(ngModel)]="player.position" name="position" placeholder="player's position" class="form-control" />
+              </div><br/>
+              <div class="input-group">
+                <input type="text" [(ngModel)]="player.nationality" name="nationality" placeholder="player's nationality" class="form-control" />
+              </div><br/>
+              <div class="input-group">
+                <input type="text" [(ngModel)]="player.club" name="club" placeholder="player's club" class="form-control" />
+              </div><br/>
+              <div class="text-center">
+                <button class="btn btn-warning">Update</button>
+              </div>            
+        </form>
+        </div>
+</div>
+</div>
+</div>
+

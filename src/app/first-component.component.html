@@ -1,0 +1,94 @@
+<div class="text-center">
+    <button type="button" class="btn btn-warning mt-5" data-bs-toggle="modal" data-bs-target="#deleteModal">
+        Add Player
+    </button>
+</div>
+<td class="bg-dark">
+    
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div>
+                        Add Player
+                    </div>
+                    
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="addPlayer()">
+                        <div class="input-group">
+                            <input type="text" placeholder="Insert player's name" [(ngModel)]="name" name="name" class="form-control" />
+                        </div><br/>
+                        <div class="input-group">
+                            <input type="text" placeholder="Insert player's position" [(ngModel)]="position" name="position" class="form-control" />
+                        </div><br/>
+                        <div class="input-group">
+                            <input type="text" placeholder="Insert player's nationality" [(ngModel)]="nationality" name="nationality" class="form-control" />
+                        </div><br/>
+                        <div class="input-group">
+                            <input type="text" placeholder="Insert player's club" [(ngModel)]="club" name="club" class="form-control" />
+                        </div><br/>
+                        <div class="d-inline-flex">
+                            <button type="submit" class="btn btn-warning mx-3">Add</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                                      
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</td>
+<table class="table table-stripped table-bordered text-center mt-3">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let player of players">
+            <td>{{ player.id }}</td>
+            <td>{{ player.name }}</td>
+            <td>{{ player.position }}</td>
+            <td>
+                <a routerLink="/players/{{player.id}}">
+                    <i class="h3 bi bi-pencil"></i>
+                </a>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger delete_button" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal-' + player.id">
+                    <i class="bi bi-x-circle"></i>
+                </button>
+                <div class="modal fade" [id]="'deleteModal-' + player.id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div>
+                                    <p>Are you sure?</p>
+                                </div>
+                                <button type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="bi bi-x-circle"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="d-inline-flex">
+                                    <a (click)="onDelete(player.id)"
+                                    class="btn btn-success">
+                                        Yes
+                                    </a>
+                                    <button type="button" class="btn btn-danger mx-2" data-bs-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+
+</table>

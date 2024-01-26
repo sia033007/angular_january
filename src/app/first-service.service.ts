@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, switchMap, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
-const httpOptions = {
-  headers : new HttpHeaders(
-    {
-      'Content-Type': 'application/json'
-    }
-  )
-}
+// const httpOptions = {
+//   headers : new HttpHeaders(
+//     {
+//       'Content-Type': 'application/json'
+//     }
+//   )
+// }
 
 @Injectable({
   providedIn: 'root'
@@ -18,33 +18,49 @@ export class FirstServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getAllPlayers(): Observable<any>{
-    return this.http.get<any>(environment.baseUrl);
-
+  setToken(http: HttpClient, url: string, crud: string, body?: any): Observable<any>{
+    return this.getToken().pipe(
+      switchMap((token: any) => {
+        const header = new HttpHeaders({
+          'Authorization': 'Bearer ' + token
+        })
+        switch (crud) {
+          case 'get':
+            return http.get(url, {headers: header});
+          case 'post':
+            return http.post(url, body, {headers: header});
+          case 'patch':
+            return http.patch(url, body, {headers: header});
+          case 'delete':
+            return http.delete(url, {headers: header});
+          default:
+            throw new Error('Invalid CRUD operation');
+        }
+      })
+    )
   }
+  getAllPlayers() : Observable<any>{
+    return this.setToken(this.http, environment.baseUrl, 'get');
+  }
+
   deletePlayer(id: number): Observable<any>{
-    return this.http.delete(`${environment.baseUrl}/${id}`);
-
+    return this.setToken(this.http, `${environment.baseUrl}/${id}`, 'delete');
   }
+
   addPlayer(player: any): Observable<any>{
-    return this.http.post(environment.baseUrl, player, httpOptions)
-       .pipe(
-          catchError((error: any) => {
-            if (error.status === 400 && error.error && error.error.errors) {
-              const validationErrors = error.error.errors;
-              return throwError('Validation error: ' + JSON.stringify(validationErrors));
-              // Optionally, you can format and handle the validation errors more extensively
-            } else {
-              return throwError('An error occurred while adding the player.');
-            }
-          })
-       );
+    return this.setToken(this.http, environment.baseUrl, 'post', player);
    }
+
    getPlayer(id: number): Observable<any>{
-    return this.http.get(`${environment.baseUrl}/${id}`);
+    return this.setToken(this.http, `${environment.baseUrl}/${id}`, 'get');
    }
+
    updatePlayer(player: any): Observable<any>{
-    return this.http.patch(`${environment.baseUrl}/${player.id}`, player, httpOptions);
+    return this.setToken(this.http, `${environment.baseUrl}/${player.id}`, 'patch', player);
+   }
+   
+   getToken(): Observable<any>{
+    return this.http.get(`${environment.baseUrl}/gettoken`, {responseType: 'text'});
    }
   }
 

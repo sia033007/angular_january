@@ -3,12 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { FirstComponentComponent } from './first-component.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PlayerDetailComponent } from './player-detail.component';
 import { PlayerDetailGuard } from './player-detail.guard';
+import { TokeninterceptorService } from './tokeninterceptor.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { PlayerDetailGuard } from './player-detail.guard';
     ]),
     FormsModule
   ],
-  providers: [],
+  providers: [
+    // {provide: HTTP_INTERCEPTORS, useClass: TokeninterceptorService, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,6 +9,7 @@ import * as bootstrap from 'bootstrap';
   styleUrls: ['./first-component.component.css']
 })
 export class FirstComponentComponent implements OnInit {
+  
   players! : any[];
   name!: string;
   position!: string;
@@ -22,6 +23,16 @@ export class FirstComponentComponent implements OnInit {
       (getPlayers)=> this.players = getPlayers 
     )
   }
+  //get players with an id multiplied by 2
+  /*
+  ngOnInit(): void {
+    this.service.getAllPlayers().pipe(
+      map((players: any[]) => players.map(player => ({ ...player, id: player.id * 2 })))
+    ).subscribe(
+      (getPlayers) => this.players = getPlayers
+    );
+  }
+  */
   onDelete(id: number): void{
     this.service.deletePlayer(id).subscribe(
       ()=> this.players = this.players.filter(p=> p.id != id)

@@ -10,12 +10,18 @@ import { FormsModule } from '@angular/forms';
 import { PlayerDetailComponent } from './player-detail.component';
 import { PlayerDetailGuard } from './player-detail.guard';
 import { TokeninterceptorService } from './tokeninterceptor.service';
+import { ClubNameComponent } from './club-name.component';
+import { PositionComponent } from './position.component';
+import { NationalityComponent } from './nationality.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FirstComponentComponent,
-    PlayerDetailComponent
+    PlayerDetailComponent,
+    ClubNameComponent,
+    PositionComponent,
+    NationalityComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +30,9 @@ import { TokeninterceptorService } from './tokeninterceptor.service';
       {path:'players', component: FirstComponentComponent},
       {path:'players/:id',
       canActivate:[PlayerDetailGuard] ,component:PlayerDetailComponent },
+      {path:'players/club/:playerClub', component: ClubNameComponent},
+      {path:'players/position/:playerPosition', component: PositionComponent},
+      {path:'players/nationality/:playerNationality', component: NationalityComponent},
       {path:'', redirectTo:'players', pathMatch:'full'}
     ]),
     FormsModule

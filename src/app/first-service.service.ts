@@ -26,7 +26,9 @@ export class FirstServiceService {
         })
         switch (crud) {
           case 'get':
-            return http.get(url, {headers: header});
+            return http.get(url);
+          case 'sortBy':
+            return http.get(url, {headers:header});
           case 'post':
             return http.post(url, body, {headers: header});
           case 'patch':
@@ -58,7 +60,20 @@ export class FirstServiceService {
    updatePlayer(player: any): Observable<any>{
     return this.setToken(this.http, `${environment.baseUrl}/${player.id}`, 'patch', player);
    }
-   
+
+   getPlayersByClub(clubName: any): Observable<any>{
+    return this.setToken(this.http, `${environment.baseUrl}/getplayersbyclub/${clubName}`, 'sortBy');
+
+   }
+   getPlayersByPosition(positionName: any): Observable<any>{
+    return this.setToken(this.http, `${environment.baseUrl}/getplayersbyposition/${positionName}`, 'sortBy');
+
+   }
+   getPlayersByNationality(nationalityName: any): Observable<any>{
+    return this.setToken(this.http, `${environment.baseUrl}/getplayersbynationality/${nationalityName}`, 'sortBy');
+
+   }
+
    getToken(): Observable<any>{
     return this.http.get(`${environment.baseUrl}/gettoken`, {responseType: 'text'});
    }

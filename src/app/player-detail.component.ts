@@ -20,8 +20,14 @@ export class PlayerDetailComponent implements OnInit {
   }
   onUpdate(): void{
 this.service.updatePlayer(this.player).subscribe(
-  ()=> this.router.navigateByUrl('/players')
-)
+  ()=>{
+    this.router.navigateByUrl('/players')
+  },
+  (error) => {
+    window.alert(error.error);
+
+  }
+  )
   }
 
 }

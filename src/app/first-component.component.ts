@@ -1,8 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FirstServiceService } from './first-service.service';
-import { Observable } from 'rxjs';
+import { Observable, finalize } from 'rxjs';
 import * as bootstrap from 'bootstrap';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-first-component',
@@ -10,6 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./first-component.component.css']
 })
 export class FirstComponentComponent implements OnInit {
+  @ViewChild('closeModal') public closeModal!: ElementRef
+
+  public isModalOpen: boolean = false;
   
   players! : any[];
   clubNames!: string[];
@@ -20,7 +25,7 @@ export class FirstComponentComponent implements OnInit {
   nationality!: string;
   club!: string;
 
-  constructor(private service: FirstServiceService, private router: Router) { }
+  constructor(private service: FirstServiceService, private router: Router, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.service.getAllPlayers().subscribe(
@@ -69,13 +74,17 @@ export class FirstComponentComponent implements OnInit {
     );
   }
   */
-  onDelete(id: number): void{
+  onDelete(id: number): void {
     this.service.deletePlayer(id).subscribe(
-      ()=> {
-        this.players = this.players.filter(p=> p.id != id);
-        this.router.navigateByUrl('/players');
-      } 
-    )
+      () => {
+        this.players = this.players.filter(p => p.id !== id);
+        const backDrop = document.querySelector('.modal-backdrop');
+        if (backDrop) {
+          backDrop.classList.add('d-none');
+        }
+        
+      }
+    );
   }
   addPlayer(): void{
     const newPlayer = {
@@ -92,9 +101,10 @@ export class FirstComponentComponent implements OnInit {
         this.position = '';
         this.nationality = '';
         this.club = '';
+        this.closeModal.nativeElement.click();
       },
       (error) => {
-        // Handle error, if needed
+        window.alert(error.error);
       }
     );
   }

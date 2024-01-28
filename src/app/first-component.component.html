@@ -1,5 +1,5 @@
-<div class="d-inline-flex mx-4 mt-4">
-    <div class="dropdown">
+<div class="row justify-content-center align-items-center text-center">
+    <div class="dropdown col-sm-4 mt-2">
         <button class="btn btn-warning dropdown-toggle mx-3" type="button" id="clubDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sort by club
         </button>
@@ -9,7 +9,7 @@
             </a>
         </div>
     </div>
-    <div class="dropdown">
+    <div class="dropdown col-sm-4 mt-2">
         <button class="btn btn-warning dropdown-toggle" type="button" id="positionDropDown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sort by Position
         </button>
@@ -19,7 +19,7 @@
             </a>
         </div>
     </div>
-    <div class="dropdown">
+    <div class="dropdown col-sm-4 mt-2">
         <button class="btn btn-warning dropdown-toggle mx-3" type="button" id="nationalityDropDown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Sort by Nationality
         </button>
@@ -34,7 +34,7 @@
 
 
 <div class="text-center">
-    <button type="button" class="btn btn-warning mt-5" data-bs-toggle="modal" data-bs-target="#deleteModal">
+    <button type="button" class="btn btn-dark bg-gray mt-5" data-bs-toggle="modal" data-bs-target="#deleteModal">
         Add Player
     </button>
 </div>
@@ -47,6 +47,9 @@
                     <div>
                         Add Player
                     </div>
+                    <button #closeModal type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="bi bi-x-circle"></i>
+                    </button>
                     
                 </div>
                 <div class="modal-body">

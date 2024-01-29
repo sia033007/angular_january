@@ -19,21 +19,28 @@ export class FirstServiceService {
   constructor(private http: HttpClient) { }
 
   setToken(http: HttpClient, url: string, crud: string, body?: any): Observable<any>{
+    return this.getToken().pipe(
+      switchMap((token: any) => {
+        const header = new HttpHeaders({
+          'Authorization': 'Bearer ' + token
+        })
         switch (crud) {
           case 'get':
             return http.get(url);
           case 'sortBy':
-            return http.get(url);
+            return http.get(url, {headers:header});
           case 'post':
-            return http.post(url, body);
+            return http.post(url, body, {headers: header});
           case 'patch':
-            return http.patch(url, body);
+            return http.patch(url, body, {headers: header});
           case 'delete':
-            return http.delete(url);
+            return http.delete(url, {headers: header});
           default:
             throw new Error('Invalid CRUD operation');
         }
-      }
+      })
+    )
+  }
   getAllPlayers() : Observable<any>{
     return this.setToken(this.http, environment.baseUrl, 'get');
   }
@@ -67,9 +74,9 @@ export class FirstServiceService {
 
    }
 
-  //  getToken(): Observable<any>{
-  //   return this.http.get(`${environment.baseUrl}/gettoken`, {responseType: 'text'});
-  //  }
+   getToken(): Observable<any>{
+    return this.http.get(`${environment.baseUrl}/gettoken`, {responseType: 'text'});
+   }
   }
 
 

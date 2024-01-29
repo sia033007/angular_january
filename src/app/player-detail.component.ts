@@ -19,6 +19,9 @@ export class PlayerDetailComponent implements OnInit {
     )
   }
   onUpdate(): void{
+    this.player.position = this.player.position.toLowerCase();
+    this.player.nationality = this.player.nationality.toLowerCase();
+    this.player.club = this.player.club.toLowerCase();
 this.service.updatePlayer(this.player).subscribe(
   ()=>{
     this.router.navigateByUrl('/players')

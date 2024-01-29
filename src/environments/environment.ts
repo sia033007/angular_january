@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  baseUrl :"http://angularsiteapi.somee.com/api/player"
+  baseUrl :"https://angularsiteapi.somee.com/api/player"
 };
 
 /*

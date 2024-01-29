@@ -3,7 +3,6 @@ import { FirstServiceService } from './first-service.service';
 import { Observable, finalize } from 'rxjs';
 import * as bootstrap from 'bootstrap';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -25,7 +24,7 @@ export class FirstComponentComponent implements OnInit {
   nationality!: string;
   club!: string;
 
-  constructor(private service: FirstServiceService, private router: Router, private modalService: NgbModal) { }
+  constructor(private service: FirstServiceService, private router: Router) { }
 
   ngOnInit(): void {
     this.service.getAllPlayers().subscribe(
@@ -48,7 +47,7 @@ export class FirstComponentComponent implements OnInit {
   }
   getUniquePositionNames(): string[] {
     const positionArray: any[] = [];
-    for (const player of this.players) {
+    for (const player of this.players) { 
       if (!positionArray.includes(player.position)) {
         positionArray.push(player.position);
       }
@@ -89,9 +88,9 @@ export class FirstComponentComponent implements OnInit {
   addPlayer(): void{
     const newPlayer = {
       "Name": this.name,
-      "Position": this.position,
-      "Nationality": this.nationality,
-      "Club": this.club
+      "Position": this.position.toLowerCase(),
+      "Nationality": this.nationality.toLowerCase(),
+      "Club": this.club.toLowerCase()
     }
     this.service.addPlayer(newPlayer).subscribe(
       () => {

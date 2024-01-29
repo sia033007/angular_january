@@ -7,28 +7,28 @@ import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 @Injectable({
   providedIn: 'root'
 })
-export class TokeninterceptorService implements HttpInterceptor {
+export class TokeninterceptorService {
 
   constructor(private service : FirstServiceService) { }
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  // intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    return this.service.getToken().pipe(
-      switchMap((token: any) => {
-        if(token){
-          req = req.clone({
-            setHeaders: {
-              Authorization: "Bearer " + token
-            }
-          });
-        }
-        return next.handle(req);
-      }),
-      catchError((error) => {
-        console.error('Token retrieval error:', error);
-        // Forward the error to the caller
-        return throwError(error);
-      })
-    );
-  }
+  //   return this.service.getToken().pipe(
+  //     switchMap((token: any) => {
+  //       if(token){
+  //         req = req.clone({
+  //           setHeaders: {
+  //             Authorization: "Bearer " + token
+  //           }
+  //         });
+  //       }
+  //       return next.handle(req);
+  //     }),
+  //     catchError((error) => {
+  //       console.error('Token retrieval error:', error);
+  //       // Forward the error to the caller
+  //       return throwError(error);
+  //     })
+  //   );
+  // }
 
 }
